@@ -1,0 +1,174 @@
+/* Default Styling */
+html{
+    height: 100%;
+    margin:0;
+    padding:0;
+    font-size: large;
+    font-family: 'Lora', serif;
+}
+
+body{
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: linear-gradient(#b9dcfd, white, white, white);
+}
+
+/* FlightFinder Title */
+#site-name{
+    font-family: 'Abril Fatface', cursive;
+    color:#2F619C;
+    text-align: center;
+    margin-top: 10%;
+    font-size:44px;
+}
+
+/* Whole Form */
+#form{
+    background-color: white;
+    border: #9CBBD7 4px solid;
+    box-shadow: 0 0 5px #9CBBD7;
+    border-radius: 6%;
+    margin-left: 22%;
+    margin-right: 22%;
+    padding: 3%;
+    padding-top:2%;
+    text-align: center;
+}
+
+#form #form-grid{
+    padding:8px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 48% 4% 48%;
+    clear:both;
+    margin-top:3%;
+}
+
+
+/* Button Default */
+#trip-type{
+    margin-right:6%;
+    margin-bottom:6%;
+    margin-top:2%;
+}
+
+/* Round Trip Button */
+#trip-type #round-trip{
+    background-color: #5D8FCA;
+    outline:none;
+    border: #528FC8 solid 2px;
+    color: white;
+    font-size: 13px;
+    padding: 1% 2%;
+    cursor: pointer;
+    float:right;
+}
+
+/* One Way Button */
+#trip-type #one-way{
+    background-color: white;
+    outline:none;
+    border: #528FC8 solid 2px;
+    color: white;
+    font-size: 13px;
+    color: #083b75;
+    padding: 1% 2%;
+    cursor: pointer;
+    float:right;
+}
+
+.first-row{
+    margin:4%;
+    padding:2%;
+    margin-bottom:0; 
+}
+
+.first-row p{
+    margin:0;
+}
+
+#arrow{
+    font-size:27px;
+    margin:0;
+    padding:0;
+    color: #2966ac;
+}
+
+#outbound-country, #inbound-country{
+    font-family: 'Lora';
+    border: 2px solid #6A9BC9;
+    width:42%;
+    margin-bottom:1%;
+    height:90%;
+}
+
+#outbound-country select, #inbound-country select{
+    display: none;
+}
+
+.third-row{
+    margin:0;
+    margin-top:16%;
+    padding:0;
+}
+
+.third-row p{
+    margin:0;
+}
+
+#last-row{
+    margin-bottom: 2%;
+    margin-top:5%;
+}
+
+/* Date Picker */
+input[type=date]{
+    width:68%;
+    border: 2px solid #6A9BC9;
+    font-family: 'Lora', serif;
+    margin:auto;
+}
+
+input[type=date]:hover{
+    border: 1px solid #6A9BC9;
+}
+
+/* Currency search */
+input[type=text]{
+    padding:0;
+    margin:0;
+    margin:0;
+    width:20%;
+    border: 2px solid #6A9BC9;
+    font-family: 'Lora', serif;
+    font-size:15px;
+}
+
+/* Submit Button */
+#button {
+    background-color: #5D8FCA;
+    text-align: center;
+    outline:none;
+    border-radius: 8%;
+    border: #528FC8 solid 2px;
+    box-shadow: 0 4px #2F619C;
+    color: white;
+    font-size: 16px;
+    margin:0;
+    margin-top:3%;
+    padding: 2% 3%;
+    cursor: pointer;
+}
+
+#button:hover{
+    background-color: #447bb9;
+}
+
+#button:active{
+    transform: translateY(2px);
+    background-color:#5D8FCA;
+    border: #528FC8 solid 2px;
+    box-shadow: 0 2px #2F619C;
+}
