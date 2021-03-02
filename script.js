@@ -132,25 +132,51 @@ function search(){
 								window.alert("There are no results for this search at this time!");
 								return;
 							}
-							/* For each quote, make HTML card */
+
+							/* Console log data */
 							console.log(data);
+
+							/* Save currency symbol, carrier list and places list */
+							let currencySymbol = data.Currencies[0].Symbol;
+							let carriers = data.Carriers;
+							let places = data.Places;
+				
+							/* Make HTML card */
 							data.Quotes.forEach(function (quote){
 								/* Assign needed info to variables */
 								let minPrice = quote.MinPrice;
 								let carrierId = quote.OutboundLeg.CarrierIds;
-								let departureDate = quote.OutboundLeg.DepartureDate;
-								let currency = data.Currencies[0].Symbol;
+
 
 								/* Make card */
 								const card = document.createElement("div");
 								card.setAttribute("class", "cards");
 
-								/* Show price */
+								/* Show carrier */
+								let carrierName;
+								carriers.forEach(function(c){
+									if(carrierId == c.CarrierId){
+										carrierName = c.Name;
+									}
+								});
+								const carrier = document.createElement("h3");
+								carrier.setAttribute("class", "carrier");
+								carrier.innerHTML = carrierName;
+								card.appendChild(carrier);
+
+								/* Show currency symbol + price*/
 								const price = document.createElement("h3");
-								price.setAttribute("card", "minprice");
-								price.innerHTML = symbol + minPrice;
+								price.setAttribute("class", "price");
+								price.innerHTML = currencySymbol + minPrice;
 								card.appendChild(price);
 
+								/* Show departure time */
+								const departTime = document.createElement("h5");
+								departTime.setAttribute("class", "departTime");
+								departTime.innerHTML = quote.OutboundLeg.DepartureDate;
+								card.appendChild(departTime);
+
+								/* Append card to HTML body */
 								document.body.appendChild(card);
 							});
 						})
