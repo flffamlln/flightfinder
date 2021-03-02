@@ -293,7 +293,7 @@ function search(){
 								price.setAttribute("class", "price");
 								price.innerHTML = currencySymbol + minPrice;
 
-								/* If cheapest one, set id to cheapest */
+								/* If cheapest one, set it to cheapest */
 								if(cheapestQuote == minPrice){
 									price.setAttribute("id", "cheapest");
 								}
