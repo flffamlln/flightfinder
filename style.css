@@ -97,7 +97,7 @@ body{
     color: #2966ac;
 }
 
-#outbound-country, #inbound-country{
+#outbound-country, #inbound-country, #currency{
     font-family: 'Lora';
     border: 2px solid #6A9BC9;
     width:42%;
@@ -105,7 +105,7 @@ body{
     height:90%;
 }
 
-#outbound-country select, #inbound-country select{
+#outbound-country select, #inbound-country select, #currency select{
     display: none;
 }
 
