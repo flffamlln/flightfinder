@@ -192,7 +192,6 @@ function search(){
 								}
 								card.appendChild(price);
 
-
 								/* Match departure originId from places */
 								let origincity;
 								let origincountry;
@@ -204,13 +203,6 @@ function search(){
 										originairport = p.Name;
 									}
 								});
-								
-								/* Add origin airport */
-								const originAirport = document.createElement("h3");
-								originAirport.setAttribute("class", "originairport");
-								originAirport.innerHTML = originairport;
-								card.appendChild(originAirport);
-
 
 								/* Match departure destinationId from places */
 								let destcity;
@@ -224,11 +216,11 @@ function search(){
 									}
 								});
 
-								/* Add destination airport */
-								const destinationAirport = document.createElement("h3");
-								destinationAirport.setAttribute("class", "destairport");
-								destinationAirport.innerHTML = destairport;
-								card.appendChild(destinationAirport);
+								/* Add depart trip airports */
+								const departAirports = document.createElement("h3");
+								departAirports.setAttribute("class", "airports");
+								departAirports.innerHTML = originairport + " ⇒ " + destairport;
+								card.appendChild(departAirports);
 
 								/* Add origin city and country */
 								const originLoc = document.createElement("h5");
@@ -272,16 +264,6 @@ function search(){
 											roriginairport = p.Name;
 										}
 									});
-									const roriginAirport = document.createElement("h3");
-									roriginAirport.setAttribute("class", "originairport");
-									roriginAirport.innerHTML = roriginairport;
-									card.appendChild(roriginAirport);
-
-									const roriginLoc = document.createElement("h5");
-									roriginLoc.setAttribute("class", "originloc");
-									roriginLoc.innerHTML = rorigincity + ", " + rorigincountry;
-									card.appendChild(roriginLoc);
-
 
 									/* Match return destinationId from places */
 									let rdestcity;
@@ -294,10 +276,18 @@ function search(){
 											rdestairport = p.Name;
 										}
 									});
-									const rdestinationAirport = document.createElement("h3");
-									rdestinationAirport.setAttribute("class", "destairport");
-									rdestinationAirport.innerHTML = rdestairport;
-									card.appendChild(rdestinationAirport);
+
+									/* Add depart trip airports */
+									const returnAirports = document.createElement("h3");
+									returnAirports.setAttribute("class", "airports");
+									returnAirports.innerHTML = roriginairport + " ⇒ " + rdestairport;
+									card.appendChild(returnAirports);
+
+									const roriginLoc = document.createElement("h5");
+									roriginLoc.setAttribute("class", "originloc");
+									roriginLoc.innerHTML = rorigincity + ", " + rorigincountry;
+									card.appendChild(roriginLoc);
+
 
 									const rdestinationLoc = document.createElement("h5");
 									rdestinationLoc.setAttribute("class", "destloc");
@@ -305,20 +295,20 @@ function search(){
 									card.appendChild(rdestinationLoc);
 								}
 
-								
-								/* Show departure time */
+								/* Uncomment to show departure and return times, but they won't include hour: min 
 								const departTime = document.createElement("h5");
 								departTime.setAttribute("class", "departTime");
 								departTime.innerHTML = quote.OutboundLeg.DepartureDate;
 								card.appendChild(departTime);
 
-								/* Show return time if round trip*/
+
 								if(isRoundTrip){
 									const returnTime = document.createElement("h5");
 									returnTime.setAttribute("class", "returnTime");
 									returnTime.innerHTML = quote.InboundLeg.DepartureDate;
 									card.appendChild(returnTime);
 								}
+								*/
 
 								/* Append card to list of cards in HTML*/
 								allCards.appendChild(card);
