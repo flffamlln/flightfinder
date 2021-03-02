@@ -292,9 +292,10 @@ function search(){
 								const price = document.createElement("h3");
 								price.setAttribute("class", "price");
 								price.innerHTML = currencySymbol + minPrice;
+
+								/* If cheapest one, set id to cheapest */
 								if(cheapestQuote == minPrice){
 									price.setAttribute("id", "cheapest");
-									console.log(cheapestQuote);
 								}
 								card.appendChild(price);
 
