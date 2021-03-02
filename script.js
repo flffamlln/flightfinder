@@ -248,7 +248,7 @@ function search(){
 										}
 									});
 									const rcarrier = document.createElement("h2");
-									rcarrier.setAttribute("class", "carrier");
+									rcarrier.setAttribute("class", "return-carrier");
 									rcarrier.innerHTML = rcarrierName;
 									card.appendChild(rcarrier);
 

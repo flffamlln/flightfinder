@@ -207,6 +207,16 @@ input[type=text]{
     float: left;
 }
 
+.return-carrier{
+    margin: 0%;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    margin-top: 3%;
+    padding: 0;
+    width: 60%;
+    float: left;
+}
+
 .price{
     margin:0;
     padding-top: 0;
