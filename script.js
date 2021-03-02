@@ -176,10 +176,21 @@ function search(){
 										carrierName = c.Name;
 									}
 								});
-								const carrier = document.createElement("h3");
+								const carrier = document.createElement("h2");
 								carrier.setAttribute("class", "carrier");
 								carrier.innerHTML = carrierName;
 								card.appendChild(carrier);
+
+								/* Show currency symbol + price*/
+								const price = document.createElement("h3");
+								price.setAttribute("class", "price");
+								price.innerHTML = currencySymbol + minPrice;
+
+								/* If cheapest one, set it to cheapest */
+								if(cheapestQuote == minPrice){
+									price.setAttribute("id", "cheapest");
+								}
+								card.appendChild(price);
 
 
 								/* Match departure originId from places */
@@ -193,15 +204,12 @@ function search(){
 										originairport = p.Name;
 									}
 								});
+								
+								/* Add origin airport */
 								const originAirport = document.createElement("h3");
 								originAirport.setAttribute("class", "originairport");
 								originAirport.innerHTML = originairport;
 								card.appendChild(originAirport);
-
-								const originLoc = document.createElement("h5");
-								originLoc.setAttribute("class", "originloc");
-								originLoc.innerHTML = origincity + ", " + origincountry;
-								card.appendChild(originLoc);
 
 
 								/* Match departure destinationId from places */
@@ -215,11 +223,20 @@ function search(){
 										destairport = p.Name;
 									}
 								});
+
+								/* Add destination airport */
 								const destinationAirport = document.createElement("h3");
 								destinationAirport.setAttribute("class", "destairport");
 								destinationAirport.innerHTML = destairport;
 								card.appendChild(destinationAirport);
 
+								/* Add origin city and country */
+								const originLoc = document.createElement("h5");
+								originLoc.setAttribute("class", "originloc");
+								originLoc.innerHTML = origincity + ", " + origincountry;
+								card.appendChild(originLoc);
+
+								/* Add destination city and country */
 								const destinationLoc = document.createElement("h5");
 								destinationLoc.setAttribute("class", "destloc");
 								destinationLoc.innerHTML = destcity + ", " + destcountry;
@@ -238,7 +255,7 @@ function search(){
 											rcarrierName = c.Name;
 										}
 									});
-									const rcarrier = document.createElement("h3");
+									const rcarrier = document.createElement("h2");
 									rcarrier.setAttribute("class", "carrier");
 									rcarrier.innerHTML = rcarrierName;
 									card.appendChild(rcarrier);
@@ -288,17 +305,7 @@ function search(){
 									card.appendChild(rdestinationLoc);
 								}
 
-								/* Show currency symbol + price*/
-								const price = document.createElement("h3");
-								price.setAttribute("class", "price");
-								price.innerHTML = currencySymbol + minPrice;
-
-								/* If cheapest one, set it to cheapest */
-								if(cheapestQuote == minPrice){
-									price.setAttribute("id", "cheapest");
-								}
-								card.appendChild(price);
-
+								
 								/* Show departure time */
 								const departTime = document.createElement("h5");
 								departTime.setAttribute("class", "departTime");
@@ -322,12 +329,6 @@ function search(){
 						});
 				})
 		);
-
-
-	
-
-	
-
 }
 
 

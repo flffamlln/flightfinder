@@ -20,7 +20,7 @@ body{
     font-family: 'Abril Fatface', cursive;
     color:#2F619C;
     text-align: center;
-    margin-top: 10%;
+    margin-top: 8%;
     font-size:44px;
 }
 
@@ -111,7 +111,7 @@ body{
 
 .third-row{
     margin:0;
-    margin-top:16%;
+    margin-top:5%;
     padding:0;
 }
 
@@ -121,7 +121,12 @@ body{
 
 #last-row{
     margin-bottom: 2%;
-    margin-top:5%;
+    margin-top:2%;
+}
+
+/* Currency picker */
+#currency{
+    width: 10%;
 }
 
 /* Date Picker */
@@ -136,7 +141,7 @@ input[type=date]:hover{
     border: 1px solid #6A9BC9;
 }
 
-/* Currency search */
+/* Search */
 input[type=text]{
     padding:0;
     margin:0;
@@ -158,7 +163,7 @@ input[type=text]{
     color: white;
     font-size: 16px;
     margin:0;
-    margin-top:3%;
+    margin-top:1%;
     padding: 2% 3%;
     cursor: pointer;
 }
@@ -174,18 +179,77 @@ input[type=text]{
     box-shadow: 0 2px #2F619C;
 }
 
-/* Quotes */
+/* Flight deals */
 .cards{
-    border: black 5px solid;
-    margin-left: 20%;
-    margin-right: 20%;
+    font-family: 'Lora';
+    background-color: white;
+    border: #82a6c5 4px solid;
+    box-shadow: 0 0 5px #ffffff;
+    border-radius: 3%;
+    margin:0;
+    padding:0;
+    padding: 1%;
+    margin-left: 22%;
+    margin-right: 22%;
+    overflow: hidden;
+}
+.carrier{
+    margin: 0%;
+    padding: 0;
+    width: 60%;
+    float: left;
 }
 
 .price{
-    color: red;
+    margin:0;
+    padding-top: 0;
+    padding:.2%;
+    color: #1d3655;
+    width: 15%;
+    float: right;
+    font-size: 20px;
+    text-align: center;
 }
 
+
 #cheapest{
-    background-color: yellow;
-    border: 5px green solid;
+    background-color: #faf3b5;
+    border: 5px #669bcc solid;
+    box-shadow: 0 0 5px #ecee92;
+}
+
+.originairport{
+    clear: both;
+    margin:0;
+    padding:0;
+    font-size: 15px;
+    width: 60%;
+    float: left;
+}
+
+.originloc{
+    margin:0;
+    padding:0;
+    clear: both;
+}
+
+.destairport{
+    margin:0;
+    padding:0;
+    font-size: 15px;
+    float: left;
+    width: 40%;
+}
+
+.destloc{
+    margin:0;
+    padding:0;
+}
+
+.departTime{
+
+}
+
+.returnTime{
+
 }
