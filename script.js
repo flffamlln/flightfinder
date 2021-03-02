@@ -222,17 +222,11 @@ function search(){
 								departAirports.innerHTML = originairport + " ⇒ " + destairport;
 								card.appendChild(departAirports);
 
-								/* Add origin city and country */
-								const originLoc = document.createElement("h5");
-								originLoc.setAttribute("class", "originloc");
-								originLoc.innerHTML = origincity + ", " + origincountry;
-								card.appendChild(originLoc);
-
-								/* Add destination city and country */
-								const destinationLoc = document.createElement("h5");
-								destinationLoc.setAttribute("class", "destloc");
-								destinationLoc.innerHTML = destcity + ", " + destcountry;
-								card.appendChild(destinationLoc);
+								/* Add depart trip city and countries */
+								const departLocations = document.createElement("h5");
+								departLocations.setAttribute("class", "locations");
+								departLocations.innerHTML = origincity + ", " + origincountry + "\t\t\t\t\t" + destcity + ", " + destcountry;
+								card.appendChild(departLocations);
 
 								/* If round trip, also find same information now for inbound */
 								if(isRoundTrip){
@@ -283,16 +277,11 @@ function search(){
 									returnAirports.innerHTML = roriginairport + " ⇒ " + rdestairport;
 									card.appendChild(returnAirports);
 
-									const roriginLoc = document.createElement("h5");
-									roriginLoc.setAttribute("class", "originloc");
-									roriginLoc.innerHTML = rorigincity + ", " + rorigincountry;
-									card.appendChild(roriginLoc);
-
-
-									const rdestinationLoc = document.createElement("h5");
-									rdestinationLoc.setAttribute("class", "destloc");
-									rdestinationLoc.innerHTML = rdestcity + ", " + rdestcountry;
-									card.appendChild(rdestinationLoc);
+									/* Add return trip city and countries */
+									const returnLocations = document.createElement("h5");
+									returnLocations.setAttribute("class", "locations");
+									returnLocations.innerHTML = rorigincity + ", " + rorigincountry + "\t\t\t" + rdestcity + ", " + rdestcountry;
+									card.appendChild(returnLocations);
 								}
 
 								/* Uncomment to show departure and return times, but they won't include hour: min 

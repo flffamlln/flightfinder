@@ -243,17 +243,9 @@ input[type=text]{
     font-size: 17px;
 }
 
-.originloc{
+.locations{
     margin:0;
     margin-left: 1%;
-    padding:0;
-    width: 50%;
-    float: left;
-}
-
-.destloc{
-    margin:0;
-    margin-right: 2%;
-    padding:0;
-    float: right;
+    padding:0; 
+    white-space: pre;
 }
