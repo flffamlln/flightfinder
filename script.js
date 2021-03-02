@@ -146,7 +146,8 @@ function search(){
 								/* Assign needed info to variables */
 								let minPrice = quote.MinPrice;
 								let carrierId = quote.OutboundLeg.CarrierIds;
-
+								let destinationId = quote.OutboundLeg.DestinationId;
+								let originId = quote.OutboundLeg.OriginId;
 
 								/* Make card */
 								const card = document.createElement("div");
@@ -163,6 +164,51 @@ function search(){
 								carrier.setAttribute("class", "carrier");
 								carrier.innerHTML = carrierName;
 								card.appendChild(carrier);
+								
+
+								/* Match originId from places */
+								let origincity;
+								let origincountry;
+								let originairport;
+								places.forEach(function(p){
+									if(originId == p.PlaceId){
+										origincity = p.CityName;
+										origincountry = p.CountryName;
+										originairport = p.Name;
+									}
+								});
+								const originAirport = document.createElement("h3");
+								originAirport.setAttribute("class", "originairport");
+								originAirport.innerHTML = originairport;
+								card.appendChild(originAirport);
+
+								const originLoc = document.createElement("h5");
+								originLoc.setAttribute("class", "originloc");
+								originLoc.innerHTML = origincity + ", " + origincountry;
+								card.appendChild(originLoc);
+
+
+								/* Match destinationId from places */
+								let destcity;
+								let destcountry;
+								let destairport;
+								places.forEach(function(p){
+									if(destinationId == p.PlaceId){
+										destcity = p.CityName;
+										destcountry = p.CountryName;
+										destairport = p.Name;
+									}
+								});
+								const destinationAirport = document.createElement("h3");
+								destinationAirport.setAttribute("class", "destairport");
+								destinationAirport.innerHTML = destairport;
+								card.appendChild(destinationAirport);
+
+								const destinationLoc = document.createElement("h5");
+								destinationLoc.setAttribute("class", "destloc");
+								destinationLoc.innerHTML = destcity + ", " + destcountry;
+								card.appendChild(destinationLoc);
+
 
 								/* Show currency symbol + price*/
 								const price = document.createElement("h3");
