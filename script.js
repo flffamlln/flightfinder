@@ -39,10 +39,7 @@ function search(){
 	let incity = document.getElementById("inbound-city").value;
 	let	incountry = document.getElementById("inbound-country").value;
 	let currency = document.getElementById("currency").value;
-	/* If round trip, save return date */
-	if(isRoundTrip){
-		let indate = document.getElementById("inbound-date").value;
-	}
+	let indate = document.getElementById("inbound-date").value;
 	/* Create alert if required fields not filled */
 	let warnings = [];
 
@@ -135,7 +132,27 @@ function search(){
 								window.alert("There are no results for this search at this time!");
 								return;
 							}
+							/* For each quote, make HTML card */
 							console.log(data);
+							data.Quotes.forEach(function (quote){
+								/* Assign needed info to variables */
+								let minPrice = quote.MinPrice;
+								let carrierId = quote.OutboundLeg.CarrierIds;
+								let departureDate = quote.OutboundLeg.DepartureDate;
+								let currency = data.Currencies[0].Symbol;
+
+								/* Make card */
+								const card = document.createElement("div");
+								card.setAttribute("class", "cards");
+
+								/* Show price */
+								const price = document.createElement("h3");
+								price.setAttribute("card", "minprice");
+								price.innerHTML = symbol + minPrice;
+								card.appendChild(price);
+
+								document.body.appendChild(card);
+							});
 						})
 						.catch(err => {
 							console.error(err);

@@ -32,6 +32,7 @@ body{
     border-radius: 6%;
     margin-left: 22%;
     margin-right: 22%;
+    margin-bottom:3%;
     padding: 3%;
     padding-top:2%;
     text-align: center;
@@ -171,4 +172,15 @@ input[type=text]{
     background-color:#5D8FCA;
     border: #528FC8 solid 2px;
     box-shadow: 0 2px #2F619C;
+}
+
+/* Quotes */
+.cards{
+    border: black 5px solid;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.minprice{
+    color: red;
 }
