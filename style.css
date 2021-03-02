@@ -184,3 +184,8 @@ input[type=text]{
 .price{
     color: red;
 }
+
+#cheapest{
+    background-color: yellow;
+    border: 5px green solid;
+}

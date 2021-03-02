@@ -116,7 +116,7 @@ function search(){
 					if(!isRoundTrip){
 						quotesURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/" + outcountry + "/" + currency + "/en-US/" + outlocationID + "/" + inlocationID + "/" + outdate;
 					} else{
-						quotesURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/" + outcountry + "/" + currency + "/en-US/" + outlocationID + "/" + inlocationID + "/" + outdate + "?inboundpartialdate=" + indate;
+						quotesURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/" + outcountry + "/" + currency + "/en-US/" + outlocationID + "/" + inlocationID + "/" + outdate + "/" + indate;
 					}
 					fetch(quotesURL, {
 						"method": "GET",
@@ -127,19 +127,35 @@ function search(){
 						})
 						.then(response => response.json())
 						.then(data => {
+							/* Clear previous search results */
+							document.getElementById("allCards").innerHTML = "";
+
 							/*If no quotes, alert user*/
 							if(data.Quotes.length == 0){
-								window.alert("There are no results for this search at this time!");
+								if(!isRoundTrip){
+									window.alert("There are no one way deals for this search at this time!");
+								} else{
+									window.alert("There are no round trip deals for this search at this time!");
+								}
 								return;
 							}
 
 							/* Console log data */
 							console.log(data);
 
-							/* Save currency symbol, carrier list and places list */
+							/* Save currency symbol, carrier list and places list from API*/
 							let currencySymbol = data.Currencies[0].Symbol;
 							let carriers = data.Carriers;
 							let places = data.Places;
+
+							/* Find what is the cheapest quote value from quote list */
+							let cheapestQuote = data.Quotes[0].MinPrice;
+							console.log(cheapestQuote);
+							data.Quotes.forEach(function (quote){
+								if(cheapestQuote > quote.MinPrice){
+									cheapestQuote = quote.MinPrice;
+								}
+							});
 				
 							/* Make HTML card */
 							data.Quotes.forEach(function (quote){
@@ -153,7 +169,7 @@ function search(){
 								const card = document.createElement("div");
 								card.setAttribute("class", "cards");
 
-								/* Show carrier */
+								/* Show departure carrier */
 								let carrierName;
 								carriers.forEach(function(c){
 									if(carrierId == c.CarrierId){
@@ -164,9 +180,9 @@ function search(){
 								carrier.setAttribute("class", "carrier");
 								carrier.innerHTML = carrierName;
 								card.appendChild(carrier);
-								
 
-								/* Match originId from places */
+
+								/* Match departure originId from places */
 								let origincity;
 								let origincountry;
 								let originairport;
@@ -188,7 +204,7 @@ function search(){
 								card.appendChild(originLoc);
 
 
-								/* Match destinationId from places */
+								/* Match departure destinationId from places */
 								let destcity;
 								let destcountry;
 								let destairport;
@@ -209,11 +225,77 @@ function search(){
 								destinationLoc.innerHTML = destcity + ", " + destcountry;
 								card.appendChild(destinationLoc);
 
+								/* If round trip, also find same information now for inbound */
+								if(isRoundTrip){
+									let rcarrierId = quote.InboundLeg.CarrierIds;
+									let rdestinationId = quote.InboundLeg.DestinationId;
+									let roriginId = quote.InboundLeg.OriginId;
+
+									/* Show return carrier */
+									let rcarrierName;
+									carriers.forEach(function(c){
+										if(rcarrierId == c.CarrierId){
+											rcarrierName = c.Name;
+										}
+									});
+									const rcarrier = document.createElement("h3");
+									rcarrier.setAttribute("class", "carrier");
+									rcarrier.innerHTML = rcarrierName;
+									card.appendChild(rcarrier);
+
+
+									/* Match return originId from places */
+									let rorigincity;
+									let rorigincountry;
+									let roriginairport;
+									places.forEach(function(p){
+										if(roriginId == p.PlaceId){
+											rorigincity = p.CityName;
+											rorigincountry = p.CountryName;
+											roriginairport = p.Name;
+										}
+									});
+									const roriginAirport = document.createElement("h3");
+									roriginAirport.setAttribute("class", "originairport");
+									roriginAirport.innerHTML = roriginairport;
+									card.appendChild(roriginAirport);
+
+									const roriginLoc = document.createElement("h5");
+									roriginLoc.setAttribute("class", "originloc");
+									roriginLoc.innerHTML = rorigincity + ", " + rorigincountry;
+									card.appendChild(roriginLoc);
+
+
+									/* Match return destinationId from places */
+									let rdestcity;
+									let rdestcountry;
+									let rdestairport;
+									places.forEach(function(p){
+										if(rdestinationId == p.PlaceId){
+											rdestcity = p.CityName;
+											rdestcountry = p.CountryName;
+											rdestairport = p.Name;
+										}
+									});
+									const rdestinationAirport = document.createElement("h3");
+									rdestinationAirport.setAttribute("class", "destairport");
+									rdestinationAirport.innerHTML = rdestairport;
+									card.appendChild(rdestinationAirport);
+
+									const rdestinationLoc = document.createElement("h5");
+									rdestinationLoc.setAttribute("class", "destloc");
+									rdestinationLoc.innerHTML = rdestcity + ", " + rdestcountry;
+									card.appendChild(rdestinationLoc);
+								}
 
 								/* Show currency symbol + price*/
 								const price = document.createElement("h3");
 								price.setAttribute("class", "price");
 								price.innerHTML = currencySymbol + minPrice;
+								if(cheapestQuote == minPrice){
+									price.setAttribute("id", "cheapest");
+									console.log(cheapestQuote);
+								}
 								card.appendChild(price);
 
 								/* Show departure time */
@@ -222,8 +304,16 @@ function search(){
 								departTime.innerHTML = quote.OutboundLeg.DepartureDate;
 								card.appendChild(departTime);
 
-								/* Append card to HTML body */
-								document.body.appendChild(card);
+								/* Show return time if round trip*/
+								if(isRoundTrip){
+									const returnTime = document.createElement("h5");
+									returnTime.setAttribute("class", "returnTime");
+									returnTime.innerHTML = quote.InboundLeg.DepartureDate;
+									card.appendChild(returnTime);
+								}
+
+								/* Append card to list of cards in HTML*/
+								allCards.appendChild(card);
 							});
 						})
 						.catch(err => {
