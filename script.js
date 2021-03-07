@@ -305,7 +305,7 @@ function search(){
 
 							/* Show footer */
 							let footer = document.createElement("p");
-							footer.innerHTML = "Made with ♡ by Yuri";
+							footer.innerHTML = "Made by Yuri Kim";
 							document.getElementById("footer").appendChild(footer);
 							document.getElementById("footer").style.backgroundColor = "#9bbadf";
 
