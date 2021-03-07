@@ -284,17 +284,17 @@ function search(){
 									card.appendChild(returnLocations);
 								}
 
-								/* Uncomment to show departure and return times, but they won't include hour: min 
+								/* Uncomment to show departure and return times, but they won't include hour: min
 								const departTime = document.createElement("h5");
 								departTime.setAttribute("class", "departTime");
-								departTime.innerHTML = quote.OutboundLeg.DepartureDate;
+								departTime.innerHTML = quote.OutboundLeg.DepartureDate.substr(0, 10);
 								card.appendChild(departTime);
 
 
 								if(isRoundTrip){
 									const returnTime = document.createElement("h5");
 									returnTime.setAttribute("class", "returnTime");
-									returnTime.innerHTML = quote.InboundLeg.DepartureDate;
+									returnTime.innerHTML = quote.InboundLeg.DepartureDate.substr(0, 10);
 									card.appendChild(returnTime);
 								}
 								*/
@@ -302,6 +302,13 @@ function search(){
 								/* Append card to list of cards in HTML*/
 								allCards.appendChild(card);
 							});
+
+							/* Show footer */
+							let footer = document.createElement("p");
+							footer.innerHTML = "Made with ♡ by Yuri";
+							document.getElementById("footer").appendChild(footer);
+							document.getElementById("footer").style.backgroundColor = "#9bbadf";
+
 						})
 						.catch(err => {
 							console.error(err);

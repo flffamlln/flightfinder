@@ -249,3 +249,15 @@ input[type=text]{
     padding:0; 
     white-space: pre;
 }
+
+/* Footer */
+#footer{
+    width: 100%;
+    padding: 4px;
+    bottom: 0;
+}
+
+#footer p{
+    text-align: center;
+    font-size: 18px;
+}
