@@ -337,7 +337,7 @@ function search(){
 
 							/* Show sort by price selector */
 							document.getElementById("sort").style.display = "block";
-							document.getElementById("sort").value = "default";
+							document.getElementById("sort").value = "lowhigh";
 
 							/* Show footer */
 							document.getElementById("footer").style.display = "block";

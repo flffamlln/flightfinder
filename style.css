@@ -231,9 +231,8 @@ input[type=text]{
 
 
 #cheapest{
-    background-color: #faf3b5;
-    border: 5px #669bcc solid;
-    box-shadow: 0 0 5px #ecee92;
+    background-color: #fdfacb;
+    border: 5px #fcecca solid;
 }
 
 .airports{
@@ -253,7 +252,7 @@ input[type=text]{
 
 /* Footer */
 #footer{
-    width: 100%;
+    width: auto;
     padding: 4px;
     bottom: 0;
     background-color: #9bbadf;
