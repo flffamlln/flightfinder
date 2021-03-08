@@ -30,6 +30,9 @@ function changeRoundTrip(){
 	isRoundTrip = true;
 }
 
+let allQuotes = [];
+let currencySymbol;
+
 /* When search button clicked */
 function search(){
 	/* Set users input to variables */
@@ -87,7 +90,6 @@ function search(){
 	/* Declare important variables ahead of time */
 	let outlocationID;	
 	let inlocationID;
-	let allQuotes;
 	let quotesURL;
 
 	/* Call to API to find origin location's ID */
@@ -129,9 +131,14 @@ function search(){
 						.then(data => {
 							/* Clear previous search results */
 							document.getElementById("allCards").innerHTML = "";
+							allQuotes = [];
 
 							/*If no quotes, alert user*/
 							if(data.Quotes.length == 0){
+								/* Hide sort by price selector and footer*/
+								document.getElementById("sort").style.display = "none";
+								document.getElementById("footer").style.display = "none";
+
 								if(!isRoundTrip){
 									window.alert("There are no one way deals for this search at this time!");
 								} else{
@@ -144,7 +151,7 @@ function search(){
 							console.log(data);
 
 							/* Save currency symbol, carrier list and places list from API*/
-							let currencySymbol = data.Currencies[0].Symbol;
+							currencySymbol = data.Currencies[0].Symbol;
 							let carriers = data.Carriers;
 							let places = data.Places;
 
@@ -159,6 +166,9 @@ function search(){
 				
 							/* Make HTML card */
 							data.Quotes.forEach(function (quote){
+								/* Blank dictionary that will hold all info of a quote*/
+								let quoteInfo = {};
+
 								/* Assign needed info to variables */
 								let minPrice = quote.MinPrice;
 								let carrierId = quote.OutboundLeg.CarrierIds;
@@ -174,6 +184,8 @@ function search(){
 								carriers.forEach(function(c){
 									if(carrierId == c.CarrierId){
 										carrierName = c.Name;
+										/* Add carrierName to dictionary */
+										quoteInfo["carrierName"] = carrierName;
 									}
 								});
 								const carrier = document.createElement("h2");
@@ -185,6 +197,8 @@ function search(){
 								const price = document.createElement("h3");
 								price.setAttribute("class", "price");
 								price.innerHTML = currencySymbol + minPrice;
+								/* Add min price to dictionary */
+								quoteInfo["minPrice"] = minPrice;
 
 								/* If cheapest one, set it to cheapest */
 								if(cheapestQuote == minPrice){
@@ -192,7 +206,7 @@ function search(){
 								}
 								card.appendChild(price);
 
-								/* Match departure originId from places */
+								/* Match originId from places */
 								let origincity;
 								let origincountry;
 								let originairport;
@@ -201,10 +215,14 @@ function search(){
 										origincity = p.CityName;
 										origincountry = p.CountryName;
 										originairport = p.Name;
+										/* Add origin info to dictionary */
+										quoteInfo["origincity"] = origincity;
+										quoteInfo["origincountry"] = origincountry;
+										quoteInfo["originairport"] = originairport;
 									}
 								});
 
-								/* Match departure destinationId from places */
+								/* Match destinationId from places */
 								let destcity;
 								let destcountry;
 								let destairport;
@@ -213,6 +231,10 @@ function search(){
 										destcity = p.CityName;
 										destcountry = p.CountryName;
 										destairport = p.Name;
+										/* Add destination info to dictionary */
+										quoteInfo["destcity"] = destcity;
+										quoteInfo["destcountry"] = destcountry;
+										quoteInfo["destairport"] = destairport;
 									}
 								});
 
@@ -239,6 +261,8 @@ function search(){
 									carriers.forEach(function(c){
 										if(rcarrierId == c.CarrierId){
 											rcarrierName = c.Name;
+											/* Add return carrier to dictionary */
+											quoteInfo["rcarrierName"] = rcarrierName;
 										}
 									});
 									const rcarrier = document.createElement("h2");
@@ -256,6 +280,10 @@ function search(){
 											rorigincity = p.CityName;
 											rorigincountry = p.CountryName;
 											roriginairport = p.Name;
+											/* Add return origin to dictionary */
+											quoteInfo["rorigincity"] = rorigincity;
+											quoteInfo["rorigincountry"] = rorigincountry;
+											quoteInfo["roriginairport"] = roriginairport;
 										}
 									});
 
@@ -268,6 +296,10 @@ function search(){
 											rdestcity = p.CityName;
 											rdestcountry = p.CountryName;
 											rdestairport = p.Name;
+											/* Add return destination info to dictionary */
+											quoteInfo["rdestcity"] = rdestcity;
+											quoteInfo["rdestcountry"] = rdestcountry;
+											quoteInfo["rdestairport"] = rdestairport;
 										}
 									});
 
@@ -284,30 +316,31 @@ function search(){
 									card.appendChild(returnLocations);
 								}
 
-								/* Uncomment to show departure and return times, but they won't include hour: min
-								const departTime = document.createElement("h5");
-								departTime.setAttribute("class", "departTime");
-								departTime.innerHTML = quote.OutboundLeg.DepartureDate.substr(0, 10);
-								card.appendChild(departTime);
-
-
-								if(isRoundTrip){
-									const returnTime = document.createElement("h5");
-									returnTime.setAttribute("class", "returnTime");
-									returnTime.innerHTML = quote.InboundLeg.DepartureDate.substr(0, 10);
-									card.appendChild(returnTime);
-								}
-								*/
-
 								/* Append card to list of cards in HTML*/
 								allCards.appendChild(card);
+								allQuotes.push(quoteInfo);
 							});
+							
+							/* Sort allQuotes list low to high price with insertion sort*/
+							let i, key, keyDict, j, jDict;
+							for(i = 1; i < allQuotes.length; i++){
+								key = allQuotes[i].minPrice;
+								keyDict = JSON.parse(JSON.stringify(allQuotes[i]));
+								j = i - 1;
+								while( j >= 0 && allQuotes[j].minPrice > key){
+									jDict = JSON.parse(JSON.stringify(allQuotes[j]));
+									allQuotes[j+1] = jDict;
+									j -= 1;
+								}
+								allQuotes[j+1] = keyDict;
+							}
+
+							/* Show sort by price selector */
+							document.getElementById("sort").style.display = "block";
+							document.getElementById("sort").value = "default";
 
 							/* Show footer */
-							let footer = document.createElement("p");
-							footer.innerHTML = "Made by Yuri Kim";
-							document.getElementById("footer").appendChild(footer);
-							document.getElementById("footer").style.backgroundColor = "#9bbadf";
+							document.getElementById("footer").style.display = "block";
 
 						})
 						.catch(err => {
@@ -318,4 +351,127 @@ function search(){
 }
 
 
+/* When sort by price changes */
+function sortCards(){
+	let sortBy = document.getElementById("sort").value;
 
+	if(sortBy == "lowhigh"){
+		document.getElementById("allCards").innerHTML = "";
+		for(let i = 0; i < allQuotes.length; i++){
+			/* Make card */
+			const card = document.createElement("div");
+			card.setAttribute("class", "cards");
+
+			const carrier = document.createElement("h2");
+			carrier.setAttribute("class", "carrier");
+			carrier.innerHTML = allQuotes[i]["carrierName"];
+			card.appendChild(carrier);
+
+			/* Show currency symbol + price*/
+			const price = document.createElement("h3");
+			price.setAttribute("class", "price");
+			price.innerHTML = currencySymbol + allQuotes[i]["minPrice"];
+
+			/* If cheapest one, set it to cheapest */
+			if(i == 0){
+				price.setAttribute("id", "cheapest");
+			}
+			card.appendChild(price);
+
+			/* Add depart trip airports */
+			const departAirports = document.createElement("h3");
+			departAirports.setAttribute("class", "airports");
+			departAirports.innerHTML = allQuotes[i]["originairport"] + " ⇒ " + allQuotes[i]["destairport"];
+			card.appendChild(departAirports);
+
+			/* Add depart trip city and countries */
+			const departLocations = document.createElement("h5");
+			departLocations.setAttribute("class", "locations");
+			departLocations.innerHTML = allQuotes[i]["origincity"] + ", " + allQuotes[i]["origincountry"] + "\t\t\t\t\t" + allQuotes[i]["destcity"] + ", " + allQuotes[i]["destcountry"];
+			card.appendChild(departLocations);
+
+			/* If round trip, also find same information now for inbound */
+			if(isRoundTrip){
+				const rcarrier = document.createElement("h2");
+				rcarrier.setAttribute("class", "return-carrier");
+				rcarrier.innerHTML = allQuotes[i]["rcarrierName"];
+				card.appendChild(rcarrier);
+
+				/* Add depart trip airports */
+				const returnAirports = document.createElement("h3");
+				returnAirports.setAttribute("class", "airports");
+				returnAirports.innerHTML = allQuotes[i]["roriginairport"] + " ⇒ " + allQuotes[i]["rdestairport"];
+				card.appendChild(returnAirports);
+
+				/* Add return trip city and countries */
+				const returnLocations = document.createElement("h5");
+				returnLocations.setAttribute("class", "locations");
+				returnLocations.innerHTML = allQuotes[i]["rorigincity"] + ", " + allQuotes[i]["rorigincountry"] + "\t\t\t" + allQuotes[i]["rdestcity"] + ", " + allQuotes[i]["rdestcountry"];
+				card.appendChild(returnLocations);
+			}
+
+			/* Append card to list of cards in HTML*/
+			allCards.appendChild(card);
+		}
+	} 
+	else if(sortBy == "highlow"){
+		document.getElementById("allCards").innerHTML = "";
+		for(let i = allQuotes.length - 1; i >= 0; i--){
+			/* Make card */
+			const card = document.createElement("div");
+			card.setAttribute("class", "cards");
+
+			
+			const carrier = document.createElement("h2");
+			carrier.setAttribute("class", "carrier");
+			carrier.innerHTML = allQuotes[i]["carrierName"];
+			card.appendChild(carrier);
+
+			/* Show currency symbol + price*/
+			const price = document.createElement("h3");
+			price.setAttribute("class", "price");
+			price.innerHTML = currencySymbol + allQuotes[i]["minPrice"];
+
+			/* If cheapest one, set it to cheapest */
+			if(i == 0){
+				price.setAttribute("id", "cheapest");
+			}
+			card.appendChild(price);
+
+			/* Add depart trip airports */
+			const departAirports = document.createElement("h3");
+			departAirports.setAttribute("class", "airports");
+			departAirports.innerHTML = allQuotes[i]["originairport"] + " ⇒ " + allQuotes[i]["destairport"];
+			card.appendChild(departAirports);
+
+			/* Add depart trip city and countries */
+			const departLocations = document.createElement("h5");
+			departLocations.setAttribute("class", "locations");
+			departLocations.innerHTML = allQuotes[i]["origincity"] + ", " + allQuotes[i]["origincountry"] + "\t\t\t\t\t" + allQuotes[i]["destcity"] + ", " + allQuotes[i]["destcountry"];
+			card.appendChild(departLocations);
+
+			/* If round trip, also find same information now for inbound */
+			if(isRoundTrip){
+				const rcarrier = document.createElement("h2");
+				rcarrier.setAttribute("class", "return-carrier");
+				rcarrier.innerHTML = allQuotes[i]["rcarrierName"];
+				card.appendChild(rcarrier);
+
+				/* Add depart trip airports */
+				const returnAirports = document.createElement("h3");
+				returnAirports.setAttribute("class", "airports");
+				returnAirports.innerHTML = allQuotes[i]["roriginairport"] + " ⇒ " + allQuotes[i]["rdestairport"];
+				card.appendChild(returnAirports);
+
+				/* Add return trip city and countries */
+				const returnLocations = document.createElement("h5");
+				returnLocations.setAttribute("class", "locations");
+				returnLocations.innerHTML = allQuotes[i]["rorigincity"] + ", " + allQuotes[i]["rorigincountry"] + "\t\t\t" + allQuotes[i]["rdestcity"] + ", " + allQuotes[i]["rdestcountry"];
+				card.appendChild(returnLocations);
+			}
+
+			/* Append card to list of cards in HTML*/
+			allCards.appendChild(card);
+		}
+	}
+}

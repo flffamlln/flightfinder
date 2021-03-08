@@ -704,14 +704,26 @@
                     </select>
                 </div>
                 <!-- Submit Button-->
-                <button id="button" onclick="search()">Search</button>
+                <button id="button" onclick="search()">Search</button>   
         </div>
+
+        <!--Sort option-->
+        <div id="sortdiv">
+            <select id="sort" name="sort" onchange="sortCards()">
+                <option selected value="default"></option>
+                <option value="lowhigh">Low to High</option>
+                <option value="highlow">High to Low</option>
+            </select>
+        </div>
+
         <!-- Where quotes will show -->
         <div id="allCards">
 
         </div>
+
+        <!-- Footer -->
         <div id="footer">
-            
+            <p>Made by Yuri Kim</p>
         </div>
     </body>
 </html> 
