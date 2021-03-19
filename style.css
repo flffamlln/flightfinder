@@ -48,7 +48,7 @@ body{
 }
 
 
-/* Button Default */
+/* Round trip / One way Button Default */
 #trip-type{
     margin-right:6%;
     margin-bottom:6%;
@@ -90,6 +90,7 @@ body{
     margin:0;
 }
 
+/* <==> Arrow */
 #arrow{
     font-size:27px;
     margin:0;
@@ -97,6 +98,7 @@ body{
     color: #2966ac;
 }
 
+/* Select bars for location, currency and sorting */
 #outbound-country, #inbound-country, #currency, #sort{
     font-family: 'Lora';
     border: 2px solid #6A9BC9;
@@ -141,7 +143,7 @@ input[type=date]:hover{
     border: 1px solid #6A9BC9;
 }
 
-/* Search */
+/* Search city */
 input[type=text]{
     padding:0;
     margin:0;
@@ -168,10 +170,12 @@ input[type=text]{
     cursor: pointer;
 }
 
+/* When hovering over search button */
 #button:hover{
     background-color: #447bb9;
 }
 
+/* When search button clicked */
 #button:active{
     transform: translateY(2px);
     background-color:#5D8FCA;
@@ -185,6 +189,7 @@ input[type=text]{
     margin-bottom: 4%;
 }
 
+/* Each individual deal */
 .cards{
     font-family: 'Lora';
     background-color: white;
@@ -229,7 +234,7 @@ input[type=text]{
     text-align: center;
 }
 
-
+/* Cheapest deal */
 #cheapest{
     background-color: #fdfacb;
     border: 5px #fcecca solid;
